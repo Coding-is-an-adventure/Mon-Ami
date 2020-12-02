@@ -371,3 +371,4 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+mon-ami.client/.eslintcache
