@@ -23,7 +23,11 @@ on:
       - '**/common.props'
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }} 
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./Mon-Ami.Server
     strategy:
       matrix: 
         os: [ubuntu-20.04, macos-11.0, windows-2019]
@@ -37,12 +41,9 @@ jobs:
 
     - name: Install dependencies
       run: dotnet restore
-      working-directory: ./Mon-Ami.Server
 
     - name: Build
       run: dotnet build --configuration Release --no-restore
-      working-directory: ./Mon-Ami.Server
 
     - name: Test
       run: dotnet test --no-restore --verbosity normal
-      working-directory: ./Mon-Ami.Server
