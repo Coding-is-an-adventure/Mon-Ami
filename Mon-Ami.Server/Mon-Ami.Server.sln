@@ -3,21 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mon-Ami.API", "Mon-Ami.API\Mon-Ami.API.csproj", "{0130536C-4FCA-4179-BE27-46A9D4743567}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mon-Ami.API", "Mon-Ami.API\Mon-Ami.API.csproj", "{0130536C-4FCA-4179-BE27-46A9D4743567}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mon-Ami.SignalR", "Mon-Ami.SignalR\Mon-Ami.SignalR.csproj", "{B9906E57-0B64-43F5-9204-84685E0DB4C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mon-Ami.SignalR", "Mon-Ami.SignalR\Mon-Ami.SignalR.csproj", "{B9906E57-0B64-43F5-9204-84685E0DB4C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mon-Ami.Test", "Mon-Ami.Test\Mon-Ami.Test.csproj", "{A867DF2A-BB14-49CB-B90C-00E16F50137E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mon-Ami.Test", "Mon-Ami.Test\Mon-Ami.Test.csproj", "{A867DF2A-BB14-49CB-B90C-00E16F50137E}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Mon-Ami.DB", "Mon-Ami.DB\Mon-Ami.DB.sqlproj", "{093BD79E-ACCA-402D-BFA1-7B32F346FAAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Persistence", "API.Persistence\API.Persistence.csproj", "{D620F8C0-9548-4849-807F-D5BBCB116868}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Persistence", "API.Persistence\API.Persistence.csproj", "{D620F8C0-9548-4849-807F-D5BBCB116868}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Application", "API.Application\API.Application.csproj", "{10A3FA89-E3C2-4ED0-B2FA-8D14A9CC4684}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Application", "API.Application\API.Application.csproj", "{10A3FA89-E3C2-4ED0-B2FA-8D14A9CC4684}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Domain", "API.Domain\API.Domain.csproj", "{E802D773-279D-44F0-AAD1-DC8894A9A764}"
-EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Mon-Ami.AuthenticationDB", "Mon-Ami.AuthenticationDB\Mon-Ami.AuthenticationDB.sqlproj", "{A91A41F1-EF03-4106-A50B-58812A873E1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Domain", "API.Domain\API.Domain.csproj", "{E802D773-279D-44F0-AAD1-DC8894A9A764}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,12 +33,6 @@ Global
 		{A867DF2A-BB14-49CB-B90C-00E16F50137E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A867DF2A-BB14-49CB-B90C-00E16F50137E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A867DF2A-BB14-49CB-B90C-00E16F50137E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{093BD79E-ACCA-402D-BFA1-7B32F346FAAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{093BD79E-ACCA-402D-BFA1-7B32F346FAAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{093BD79E-ACCA-402D-BFA1-7B32F346FAAF}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{093BD79E-ACCA-402D-BFA1-7B32F346FAAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{093BD79E-ACCA-402D-BFA1-7B32F346FAAF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{093BD79E-ACCA-402D-BFA1-7B32F346FAAF}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{D620F8C0-9548-4849-807F-D5BBCB116868}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D620F8C0-9548-4849-807F-D5BBCB116868}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D620F8C0-9548-4849-807F-D5BBCB116868}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -55,12 +45,6 @@ Global
 		{E802D773-279D-44F0-AAD1-DC8894A9A764}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E802D773-279D-44F0-AAD1-DC8894A9A764}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E802D773-279D-44F0-AAD1-DC8894A9A764}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A91A41F1-EF03-4106-A50B-58812A873E1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A91A41F1-EF03-4106-A50B-58812A873E1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A91A41F1-EF03-4106-A50B-58812A873E1C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{A91A41F1-EF03-4106-A50B-58812A873E1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A91A41F1-EF03-4106-A50B-58812A873E1C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A91A41F1-EF03-4106-A50B-58812A873E1C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
