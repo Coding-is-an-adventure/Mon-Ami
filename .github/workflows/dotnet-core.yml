@@ -34,9 +34,15 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.100
+
     - name: Install dependencies
       run: dotnet restore
+      working-directory: ./Mon-Ami.Server
+
     - name: Build
       run: dotnet build --configuration Release --no-restore
+      working-directory: ./Mon-Ami.Server
+
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+      working-directory: ./Mon-Ami.Server
