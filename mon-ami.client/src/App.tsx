@@ -23,7 +23,11 @@ class App extends Component {
   render() {
     return (
       <div className='App'>
-        <h1>Hi</h1>
+        <ul>
+          {this.state.values.map((value: any) =>
+          <li key={value.id}>{value.name}</li>
+          )}
+        </ul>
       </div>
     );
   }
