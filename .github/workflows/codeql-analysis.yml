@@ -14,9 +14,24 @@ name: "CodeQL Security"
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+    - '**.gitignore'
+    - '**.dockerignore'
+    - '**/README.md'
+    - '**/stylecop.props'
+    - '**/stylecop.ruleset'
+    - '**/stylecop.json'
+    - '**/common.props'
   pull_request:
     # The branches below must be a subset of the branches above
     branches: [ main ]
+    - '**.gitignore'
+    - '**.dockerignore'
+    - '**/README.md'
+    - '**/stylecop.props'
+    - '**/stylecop.ruleset'
+    - '**/stylecop.json'
+    - '**/common.props'
 
 jobs:
   analyze:
