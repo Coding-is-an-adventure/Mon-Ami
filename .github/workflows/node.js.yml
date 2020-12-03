@@ -35,8 +35,8 @@ jobs:
         working-directory: ./mon-ami.client
     strategy:
       matrix: 
-        os: [ubuntu-20.04, macos-11.0, windows-2019]
-        node-version: [15.x, 14.x, 12.x]
+        os: [ubuntu-20.04, windows-2019]
+        node-version: [15.x, 14.x]
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
