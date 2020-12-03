@@ -19,6 +19,7 @@ namespace Mon_Ami.API
         {
             CreateHostBuilder(args).Build().Run();
 
+            //Inputs test values into the database. Don't use this in production!!
             //IHost host = CreateHostBuilder(args).Build();
             //using (IServiceScope scope = host.Services.CreateScope())
             //{
