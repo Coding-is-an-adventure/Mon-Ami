@@ -16,6 +16,7 @@ class App extends Component {
       this.setState({
         values: response.data
       })
+      console.log(this.state.values)
     })   
   }
 
@@ -23,9 +24,9 @@ class App extends Component {
     return (
       <div className="App">
         <ul>
-          {this.state.values.map((value: any) => {
-            <li key={value.id}>{value.name}</li>;
-          })}
+          {this.state.values.map((value: any) => 
+            <li key={value.id} >{value.name}</li>  
+          )}
         </ul>
       </div>
     );
