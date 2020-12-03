@@ -13,7 +13,7 @@ namespace API.Domain
         public int Id { get; set; }
 
         [Required]
-        [MinLength(3), MaxLength(75)]
+        [MaxLength(255)]
         public string Name { get; set; }
     }
 }
