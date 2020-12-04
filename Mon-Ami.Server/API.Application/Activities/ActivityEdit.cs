@@ -49,7 +49,7 @@ namespace API.Application.Activities
                     throw new Exception("Could not find the specified activity");
                 }
 
-                // if the left side is null, everything on the right of the operator will be executed.
+                // if the left side is null, the right of the operator will be executed.
                 activity.Title = request.Title ?? activity.Title;
                 activity.Description = request.Description ?? activity.Description;
                 activity.Category = request.Category ?? activity.Category;
@@ -57,7 +57,7 @@ namespace API.Application.Activities
                 activity.City = request.City ?? activity.City;
                 activity.Venue = request.Venue ?? activity.Venue;
 
-                bool succes = await _context.SaveChangesAsync() > 0;
+                bool succes = await _context.SaveChangesAsync(token) > 0;
                 if (succes == true)
                 {
                     return Unit.Value;
