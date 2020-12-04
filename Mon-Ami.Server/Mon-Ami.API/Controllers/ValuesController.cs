@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Domain;
 using API.Persistence;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +22,7 @@ namespace Mon_Ami.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Value>>> Get()
         {
-            var values = await _context.Values.ToListAsync();
+            List<Value> values = await _context.Values.ToListAsync();
             return Ok(values);
         }
 
@@ -33,7 +30,7 @@ namespace Mon_Ami.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<IEnumerable<Value>>> Get(int id)
         {
-            var value = await _context.Values.FindAsync(id);
+            Value value = await _context.Values.FindAsync(id);
             return Ok(value);
         }
 
