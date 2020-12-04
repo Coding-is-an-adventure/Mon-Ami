@@ -41,6 +41,7 @@ namespace Mon_Ami.API
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mon_Ami.API", Version = "v1" });
+                c.CustomSchemaIds(type => type.ToString());
             });
         }
 
