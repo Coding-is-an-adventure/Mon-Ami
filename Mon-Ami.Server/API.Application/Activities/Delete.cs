@@ -7,7 +7,7 @@ using MediatR;
 
 namespace API.Application.Activities
 {
-    public class ActivityDelete
+    public class Delete
     {
         public class Command : IRequest
         {

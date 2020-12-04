@@ -35,7 +35,7 @@ namespace Mon_Ami.API
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:3000", "http://localhost:3000");
                 });
             });
-            services.AddMediatR(typeof(ActivityList.Handler).Assembly);
+            services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
