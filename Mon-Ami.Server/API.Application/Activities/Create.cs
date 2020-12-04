@@ -10,7 +10,7 @@ using MediatR;
 
 namespace API.Application.Activities
 {
-    public class ActivityCreate
+    public class Create
     {
         public class Command : IRequest
         {

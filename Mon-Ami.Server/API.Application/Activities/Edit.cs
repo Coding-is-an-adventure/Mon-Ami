@@ -7,7 +7,7 @@ using MediatR;
 
 namespace API.Application.Activities
 {
-    public class ActivityEdit
+    public class Edit
     {
         public class Command : IRequest
         {

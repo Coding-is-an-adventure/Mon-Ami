@@ -1,20 +1,20 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using API.Domain;
 using API.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Application.Activities
 {
-    public class ActivityDetails
+    public class List
     {
-        public class Query : IRequest<Activity>
+        public class Query : IRequest<List<Activity>>
         {
-            public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Activity>
+        public class Handler : IRequestHandler<Query, List<Activity>>
         {
             private readonly DataContext _context;
 
@@ -23,12 +23,12 @@ namespace API.Application.Activities
                 _context = context;
             }
 
-            public async Task<Activity> Handle(
+            public async Task<List<Activity>> Handle(
                 Query request,
                 CancellationToken token)
             {
-                Activity activity = await _context.Activities.FindAsync(new object[] { request.Id }, token);
-                return activity;
+                List<Activity> activities = await _context.Activities.ToListAsync(token);
+                return activities;
             }
         }
     }

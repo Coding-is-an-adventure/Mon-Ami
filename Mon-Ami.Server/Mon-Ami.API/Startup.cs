@@ -35,12 +35,13 @@ namespace Mon_Ami.API
                     policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:3000", "http://localhost:3000");
                 });
             });
-            services.AddMediatR(typeof(ActivityList.Handler).Assembly);
+            services.AddMediatR(typeof(List.Handler).Assembly);
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mon_Ami.API", Version = "v1" });
+                c.CustomSchemaIds(type => type.ToString());
             });
         }
 
