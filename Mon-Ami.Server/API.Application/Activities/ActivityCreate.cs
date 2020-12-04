@@ -62,7 +62,7 @@ namespace API.Application.Activities
 
                 // Throws an error if the count is equal or smaller than 0.
                 // This means that 0 changes have been made in the database.
-                throw new Exception("A problem occured while try to save the changes.");
+                throw new Exception("A problem occured while trying to save the changes.");
             }
         }
     }
