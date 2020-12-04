@@ -54,7 +54,7 @@ namespace API.Application.Activities
                 };
 
                 _context.Activities.Add(activity);
-                bool succes = await _context.SaveChangesAsync() > 0;
+                bool succes = await _context.SaveChangesAsync(token) > 0;
                 if (succes == true)
                 {
                     return Unit.Value;
