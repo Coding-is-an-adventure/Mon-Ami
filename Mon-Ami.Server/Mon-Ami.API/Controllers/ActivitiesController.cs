@@ -22,9 +22,16 @@ namespace Mon_Ami.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Activity>>> List()
+        public async Task<ActionResult<List<Activity>>> ActivityList()
         {
             List<Activity> result = await _mediator.Send(new ActivityList.Query());
+            return result;
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Activity>> ActivityDetails(Guid id)
+        {
+            Activity result = await _mediator.Send(new ActivityDetails.Query { Id = id });
             return result;
         }
     }
