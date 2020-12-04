@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using API.Domain;
 using API.Persistence;
 using MediatR;
 
@@ -29,9 +27,17 @@ namespace API.Application.Activities
                 Command request,
                 CancellationToken token)
             {
+                Activity activity = await _context.Activities.FindAsync(request.Id);
 
-                _context.Activities.Remove();
+                if (activity == null)
+                {
+                    throw new Exception("Could not find the specified activity");
+                }
+
+                _context.Remove(activity);
+
                 bool succes = await _context.SaveChangesAsync(token) > 0;
+
                 if (succes == true)
                 {
                     return Unit.Value;
@@ -39,7 +45,8 @@ namespace API.Application.Activities
 
                 // Throws an error if the count is equal or smaller than 0.
                 // This means that 0 changes have been made in the database.
-                throw new Exception("A problem occured while trying to save the changes.");
+                throw new Exception("A problem occured while trying to delete the activity");
             }
         }
+    }
 }
