@@ -30,7 +30,7 @@ namespace API.Application.Activities
                 Query request,
                 CancellationToken cancellationToken)
             {
-                List<Activity> activities = await _context.Activities.ToListAsync(cancellationToken: cancellationToken);
+                List<Activity> activities = await _context.Activities.ToListAsync(cancellationToken);
                 return activities;
             }
         }

@@ -31,8 +31,8 @@ namespace API.Application.Activities
                 Query request,
                 CancellationToken cancellationToken)
             {
-                Activity activitie = await _context.Activities.FindAsync(request.Id);
-                return activitie;
+                Activity activity = await _context.Activities.FindAsync(new object[] { request.Id }, cancellationToken);
+                return activity;
             }
         }
     }
