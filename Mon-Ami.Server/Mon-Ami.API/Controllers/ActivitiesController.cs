@@ -37,9 +37,25 @@ namespace Mon_Ami.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Unit>> CreateActivity(ActivityCreate.Command command)
+        public async Task<ActionResult<Unit>> CreateActivity(ActivityCreate.Command command, CancellationToken token)
         {
-            Unit result = await _mediator.Send(command);
+            Unit result = await _mediator.Send(command, token);
+            return result;
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Unit>> EditActivity(Guid id, ActivityEdit.Command command, CancellationToken token)
+        {
+            command.Id = id;
+            Unit result = await _mediator.Send(command, token);
+            return result;
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<Unit>> DeleteActivity(Guid id, ActivityDelete.Command command, CancellationToken token)
+        {
+            command.Id = id;
+            Unit result = await _mediator.Send(new ActivityDelete.Command { Id = id }, token);
             return result;
         }
     }
