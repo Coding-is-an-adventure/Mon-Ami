@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Header, Icon, List } from "semantic-ui-react";
+
+import { List } from "semantic-ui-react";
+import  NavigationBar from "../../features/navigation/NavigationBar";
+
 import axios from "axios";
 import { IActivity } from "../models/Activity";
 
@@ -16,10 +19,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header as="h2">
-        <Icon name="users"></Icon>
-        <Header.Content>Mon Ami</Header.Content>
-      </Header>
+      <NavigationBar></NavigationBar>
       <List>
         {activities.map((activity) => (
           <List.Item key={activity.id}>{activity.title}</List.Item>
