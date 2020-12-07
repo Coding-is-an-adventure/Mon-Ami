@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 
-import { List } from "semantic-ui-react";
-import  NavigationBar from "../../features/navigation/NavigationBar";
+import { Container } from "semantic-ui-react";
+import NavigationBar from "../../features/navigation/NavigationBar";
+import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 
 import axios from "axios";
-import { IActivity } from "../models/Activity";
+import { IActivity } from "./../models/Activity";
 
 const App = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
@@ -18,14 +19,12 @@ const App = () => {
   }, []);
 
   return (
-    <div className="App">
-      <NavigationBar></NavigationBar>
-      <List>
-        {activities.map((activity) => (
-          <List.Item key={activity.id}>{activity.title}</List.Item>
-        ))}
-      </List>
-    </div>
+    <Fragment>
+      <NavigationBar />
+      <Container style={{ marginTop: "7em" }}>
+        <ActivityDashboard activities={activities}/>
+      </Container>
+    </Fragment>
   );
 };
 
