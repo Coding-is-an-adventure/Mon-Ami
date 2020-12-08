@@ -1,19 +1,26 @@
 import React from "react";
 import { Card, Image, Button } from "semantic-ui-react";
+import { IActivity } from "../../../app/models/Activity";
 
-interface ActivityDetailsProps {}
+interface IActivityDetailsProps {
+  activity: IActivity;
+}
 
-const ActivityDetails: React.FC<ActivityDetailsProps> = () => {
+const ActivityDetails: React.FC<IActivityDetailsProps> = ({ activity }) => {
   return (
     <Card fluid>
-      <Image src="/assets/placeholder.png" wrapped ui={false} />
+      <Image
+        src={`/assets/categoryImages/${activity.category}.jpg`}
+        wrapped
+        ui={false}
+      />
       <Card.Content>
-        <Card.Header>Title</Card.Header>
+        <Card.Header>{activity.title}</Card.Header>
         <Card.Meta>
-          <span>Date</span>
+          <span>{activity.date}</span>
         </Card.Meta>
         <Card.Description>
-          <span>Description</span>
+          <span>{activity.description}</span>
         </Card.Description>
       </Card.Content>
       <Card.Content extra>

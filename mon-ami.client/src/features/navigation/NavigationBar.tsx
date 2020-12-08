@@ -1,9 +1,9 @@
 import React from "react";
 import { Menu, Container, Button } from "semantic-ui-react";
 
-interface NavigationBarProps {}
+interface INavigationBarProps {}
 
-const NavigationBar: React.FC<NavigationBarProps> = () => {
+const NavigationBar: React.FC<INavigationBarProps> = () => {
   return (
     <Menu fixed="top" inverted>
       <Container>
