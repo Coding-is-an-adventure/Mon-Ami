@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment, SyntheticEvent } from "react";
 
 import { Container } from "semantic-ui-react";
 import NavigationBar from "../../features/navigation/NavigationBar";
@@ -15,6 +15,8 @@ const App = () => {
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [editMode, setEditMode] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+  const [target, setTarget] = useState('');
 
   const handleSelectActivity = (id: string) => {
     setSelectedActivity(activities.filter((a) => a.id === id)[0]);
@@ -27,14 +29,16 @@ const App = () => {
   };
 
   const handleCreateActivity = (activity: IActivity) => {
+    setSubmitting(true);
     Agent.Activities.create(activity).then(() => {
       setActivities([...activities, activity]);
       setSelectedActivity(activity);
       setEditMode(false);
-    });
+    }).then(() => setSubmitting(false));
   };
 
   const handleEditActivity = (activity: IActivity) => {
+    setSubmitting(true);
     Agent.Activities.update(activity).then(() => {
       setActivities([
         ...activities.filter((a) => a.id !== activity.id),
@@ -42,13 +46,15 @@ const App = () => {
       ]);
       setSelectedActivity(activity);
       setEditMode(false);
-    });
+    }).then(() => setSubmitting(false));
   };
 
-  const handleDeleteActivity = (id: string) => {
+  const handleDeleteActivity = (event: SyntheticEvent<HTMLButtonElement>, id: string) => {
+    setTarget(event.currentTarget.name);
+    setSubmitting(true);
     Agent.Activities.delete(id).then(() => {
       setActivities([...activities.filter((a) => a.id !== id)]);
-    })
+    }).then(() => setSubmitting(false))
   };
 
   useEffect(() => {
@@ -78,6 +84,8 @@ const App = () => {
           createActivity={handleCreateActivity}
           editActivity={handleEditActivity}
           deleteActivity={handleDeleteActivity}
+          submitting={submitting}
+          target={target}
         />
       </Container>
     </Fragment>

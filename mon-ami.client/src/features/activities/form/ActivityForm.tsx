@@ -8,6 +8,7 @@ interface IActivityFormProps {
   activity: IActivity | null;
   createActivity: (activity: IActivity) => void;
   editActivity: (activity: IActivity) => void;
+  submitting: boolean;
 }
 
 const ActivityForm: React.FC<IActivityFormProps> = ({
@@ -15,6 +16,7 @@ const ActivityForm: React.FC<IActivityFormProps> = ({
   activity: initialFormState,
   createActivity,
   editActivity,
+  submitting,
 }) => {
   const initializeForm = () => {
     if (initialFormState) {
@@ -39,11 +41,9 @@ const ActivityForm: React.FC<IActivityFormProps> = ({
         ...activity,
         id: uuid(),
       };
-      console.log("created a new activity");
       createActivity(newActivity);
     } else {
       editActivity(activity);
-      console.log("edited activity");
     }
   };
 
@@ -95,7 +95,13 @@ const ActivityForm: React.FC<IActivityFormProps> = ({
           placeholder="Venue"
           value={activity.venue}
         />
-        <Button floated="right" positive type="submit" content="Submit" />
+        <Button
+          loading={submitting}
+          floated="right"
+          positive
+          type="submit"
+          content="Submit"
+        />
         <Button
           onClick={() => setEditMode(false)}
           floated="right"
