@@ -3,6 +3,7 @@ import React, { useState, useEffect, Fragment } from "react";
 import { Container } from "semantic-ui-react";
 import NavigationBar from "../../features/navigation/NavigationBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
+import Loading from "../layout/Loading"
 
 import Agent from "../api/Agent";
 import { IActivity } from "./../models/Activity";
@@ -13,6 +14,7 @@ const App = () => {
   );
   const [activities, setActivities] = useState<IActivity[]>([]);
   const [editMode, setEditMode] = useState<boolean>(false);
+  const [loading, setLoading] = useState(true);
 
   const handleSelectActivity = (id: string) => {
     setSelectedActivity(activities.filter((a) => a.id === id)[0]);
@@ -57,10 +59,12 @@ const App = () => {
         activities.push(activity);
       });
       setActivities(activities);
-    });
+    }).then(() => setLoading(false));
   }, []);
 
-  return (
+  if (loading) return <Loading content="Loading activities...."/>
+  
+  else return (
     <Fragment>
       <NavigationBar openCreateForm={handleOpenCreateForm} />
       <Container style={{ marginTop: "7em" }}>
