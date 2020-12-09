@@ -50,7 +50,7 @@ namespace Mon_Ami.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Unit>> Delete(Guid id)
+        public async Task<ActionResult<Unit>> Delete(Guid id, CancellationToken token)
         {
             Unit result = await _mediator.Send(new Delete.Command { Id = id });
             return result;
