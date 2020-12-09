@@ -4,7 +4,7 @@ import { Container } from "semantic-ui-react";
 import NavigationBar from "../../features/navigation/NavigationBar";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 
-import axios from "axios";
+import Agent from "../api/Agent";
 import { IActivity } from "./../models/Activity";
 
 const App = () => {
@@ -25,35 +25,39 @@ const App = () => {
   };
 
   const handleCreateActivity = (activity: IActivity) => {
-    setActivities([...activities, activity]);
-    setSelectedActivity(activity);
-    setEditMode(false);
+    Agent.Activities.create(activity).then(() => {
+      setActivities([...activities, activity]);
+      setSelectedActivity(activity);
+      setEditMode(false);
+    });
   };
 
   const handleEditActivity = (activity: IActivity) => {
-    setActivities([
-      ...activities.filter((a) => a.id !== activity.id),
-      activity,
-    ]);
-    setSelectedActivity(activity);
-    setEditMode(false);
+    Agent.Activities.update(activity).then(() => {
+      setActivities([
+        ...activities.filter((a) => a.id !== activity.id),
+        activity,
+      ]);
+      setSelectedActivity(activity);
+      setEditMode(false);
+    });
   };
 
   const handleDeleteActivity = (id: string) => {
-    setActivities([...activities.filter(a=> a.id !== id)])
-  }
+    Agent.Activities.delete(id).then(() => {
+      setActivities([...activities.filter((a) => a.id !== id)]);
+    })
+  };
 
   useEffect(() => {
-    axios
-      .get<IActivity[]>("https://localhost:44380/api/activities")
-      .then((response) => {
-        let activities: IActivity[] = [];
-        response.data.forEach(activity => {
-          activity.date = activity.date.split('.')[0];
-          activities.push(activity)
-        })
-        setActivities(activities);
+    Agent.Activities.list().then((response) => {
+      let activities: IActivity[] = [];
+      response.forEach((activity) => {
+        activity.date = activity.date.split(".")[0];
+        activities.push(activity);
       });
+      setActivities(activities);
+    });
   }, []);
 
   return (
