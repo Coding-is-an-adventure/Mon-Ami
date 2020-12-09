@@ -1,7 +1,7 @@
 import React, { useState, FormEvent } from "react";
 import { Segment, Form, Button } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/Activity";
-import {v4 as uuid} from "uuid";
+import { v4 as uuid } from "uuid";
 
 interface IActivityFormProps {
   setEditMode: (editMode: boolean) => void;
@@ -19,29 +19,31 @@ const ActivityForm: React.FC<IActivityFormProps> = ({
   const initializeForm = () => {
     if (initialFormState) {
       return initialFormState;
-    }
-    return {
-      id: "",
-      title: "",
-      category: "",
-      description: "",
-      date: "",
-      city: "",
-      venue: "",
-    };
+    } else
+      return {
+        id: "",
+        title: "",
+        category: "",
+        description: "",
+        date: "",
+        city: "",
+        venue: "",
+      };
   };
 
   const [activity, setActivity] = useState<IActivity>(initializeForm);
 
   const handleSubmit = () => {
-    if (activity.id.length === 1) {
+    if (activity.id.length === 0) {
       let newActivity = {
         ...activity,
         id: uuid(),
       };
+      console.log("created a new activity");
       createActivity(newActivity);
     } else {
       editActivity(activity);
+      console.log("edited activity");
     }
   };
 
