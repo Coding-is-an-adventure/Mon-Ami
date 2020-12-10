@@ -5,7 +5,6 @@ import { IActivity } from "../models/Activity";
 
 class ActivityStore {
   @observable activityRegistry = new Map();
-  //@observable activities: IActivity[] = [];
   @observable selectedActivity: IActivity | undefined;
   @observable editMode: boolean = false;
 
@@ -55,6 +54,20 @@ class ActivityStore {
       this.editMode = false;
     } catch (error) {
       console.error();
+    } finally {
+      this.submitting = false;
+    }
+  };
+
+  @action editActivity = async (activity: IActivity) => {
+    this.submitting = true;
+    try {
+      await agent.Activities.update(activity);
+      this.activityRegistry.set(activity.id, activity);
+      this.selectedActivity = activity;
+      this.editMode = false;
+    } catch (error) {
+      console.log(error);
     } finally {
       this.submitting = false;
     }
