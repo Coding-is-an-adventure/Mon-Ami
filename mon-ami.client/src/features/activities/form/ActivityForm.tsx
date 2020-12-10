@@ -7,18 +7,14 @@ import { v4 as uuid } from "uuid";
 interface IActivityFormProps {
   setEditMode: (editMode: boolean) => void;
   activity: IActivity | null;
-  editActivity: (activity: IActivity) => void;
-  submitting: boolean;
 }
 
 const ActivityForm: React.FC<IActivityFormProps> = ({
   setEditMode,
   activity: initialFormState,
-  editActivity,
-  submitting,
 }) => {
   const activityStore = useContext(ActivityStore);
-  const {createActivity} = activityStore;
+  const { createActivity, editActivity, submitting } = activityStore;
   const initializeForm = () => {
     if (initialFormState) {
       return initialFormState;
