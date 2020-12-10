@@ -1,4 +1,5 @@
 import React, { SyntheticEvent } from "react";
+import { observer } from "mobx-react-lite";
 import { Grid } from "semantic-ui-react";
 import { IActivity } from "../../../app/models/Activity";
 import ActivityList from "../dashboard/ActivityList";
@@ -66,4 +67,4 @@ const ActivityDashboard: React.FC<IActivityDashboardProps> = ({
   );
 };
 
-export default ActivityDashboard;
+export default observer(ActivityDashboard);
