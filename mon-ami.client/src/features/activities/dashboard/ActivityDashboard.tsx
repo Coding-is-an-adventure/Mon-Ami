@@ -10,7 +10,6 @@ import ActivityStore from "../../../app/stores/activityStore";
 interface IActivityDashboardProps {
   setEditMode: (editMode: boolean) => void;
   setSelectedActivity: (activity: IActivity | null) => void;
-  editActivity: (activity: IActivity) => void;
   deleteActivity: (e: SyntheticEvent<HTMLButtonElement>, id: string) => void;
   submitting: boolean;
   target: string;
@@ -19,7 +18,6 @@ interface IActivityDashboardProps {
 const ActivityDashboard: React.FC<IActivityDashboardProps> = ({
   setEditMode,
   setSelectedActivity,
-  editActivity,
   deleteActivity,
   submitting,
   target,
@@ -47,8 +45,6 @@ const ActivityDashboard: React.FC<IActivityDashboardProps> = ({
             key={(selectedActivity && selectedActivity.id) || null}
             setEditMode={setEditMode}
             activity={null}
-            editActivity={editActivity}
-            submitting={submitting}
           />
         )}
       </Grid.Column>
