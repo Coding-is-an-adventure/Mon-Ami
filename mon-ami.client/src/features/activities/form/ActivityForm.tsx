@@ -5,16 +5,19 @@ import { IActivity } from "../../../app/models/activity";
 import { v4 as uuid } from "uuid";
 
 interface IActivityFormProps {
-  setEditMode: (editMode: boolean) => void;
-  activity: IActivity | null;
+  activity: IActivity;
 }
 
 const ActivityForm: React.FC<IActivityFormProps> = ({
-  setEditMode,
   activity: initialFormState,
 }) => {
   const activityStore = useContext(ActivityStore);
-  const { createActivity, editActivity, submitting } = activityStore;
+  const {
+    createActivity,
+    editActivity,
+    submitting,
+    cancelFormOpen,
+  } = activityStore;
   const initializeForm = () => {
     if (initialFormState) {
       return initialFormState;
@@ -99,11 +102,7 @@ const ActivityForm: React.FC<IActivityFormProps> = ({
           type="submit"
           content="Submit"
         />
-        <Button
-          onClick={() => setEditMode(false)}
-          floated="right"
-          content="Cancel"
-        />
+        <Button onClick={cancelFormOpen} floated="right" content="Cancel" />
       </Form>
     </Segment>
   );
