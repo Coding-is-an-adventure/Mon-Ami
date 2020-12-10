@@ -46,6 +46,11 @@ class ActivityStore {
     this.selectedActivity = undefined;
   };
 
+  @action openEditForm = (id: string) => {
+    this.selectedActivity = this.activityRegistry.get(id);
+    this.editMode = true;
+  }
+
   @action createActivity = async (activity: IActivity) => {
     this.submitting = true;
     try {
