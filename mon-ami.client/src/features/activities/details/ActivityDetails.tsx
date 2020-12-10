@@ -1,21 +1,13 @@
 import React, { useContext } from "react";
 import { observer } from "mobx-react-lite";
 import { Card, Image, Button } from "semantic-ui-react";
-import { IActivity } from "../../../app/models/activity";
 import ActivityStore from "../../../app/stores/activityStore";
 
-interface IActivityDetailsProps {
-  setSelectedActivity: (activity: IActivity | null) => void;
-}
-
-const ActivityDetails: React.FC<IActivityDetailsProps> = ({
-  setSelectedActivity,
-}) => {
+const ActivityDetails: React.FC = () => {
   const activityStore = useContext(ActivityStore);
   const {
     selectedActivity: activity,
     openEditForm,
-    cancelFormOpen,
     cancelSelectedActivity,
   } = activityStore;
   return (
@@ -43,7 +35,7 @@ const ActivityDetails: React.FC<IActivityDetailsProps> = ({
             content="Edit"
           />
           <Button
-            onClick={() => setSelectedActivity(null)}
+            onClick={cancelSelectedActivity}
             basic
             color="grey"
             content="Cancel"
