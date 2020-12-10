@@ -5,16 +5,14 @@ import { IActivity } from "../../../app/models/Activity";
 import ActivityStore from "../../../app/stores/activityStore";
 
 interface IActivityDetailsProps {
-  setEditMode: (editMode: boolean) => void;
   setSelectedActivity: (activity: IActivity | null) => void;
 }
 
 const ActivityDetails: React.FC<IActivityDetailsProps> = ({
-  setEditMode,
   setSelectedActivity,
 }) => {
   const activityStore = useContext(ActivityStore);
-  const { selectedActivity: activity } = activityStore;
+  const { selectedActivity: activity, openEditForm } = activityStore;
   return (
     <Card fluid>
       <Image
@@ -34,7 +32,7 @@ const ActivityDetails: React.FC<IActivityDetailsProps> = ({
       <Card.Content extra>
         <Button.Group widths={2}>
           <Button
-            onClick={() => setEditMode(true)}
+            onClick={() => openEditForm(activity!.id)}
             basic
             color="blue"
             content="Edit"
