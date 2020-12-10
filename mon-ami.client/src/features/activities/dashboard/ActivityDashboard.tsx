@@ -1,7 +1,6 @@
 import React, { useContext, SyntheticEvent } from "react";
 import { observer } from "mobx-react-lite";
 import { Grid } from "semantic-ui-react";
-import { IActivity } from "../../../app/models/activity";
 import ActivityList from "../dashboard/ActivityList";
 import ActivityDetails from "../details/ActivityDetails";
 import ActivityForm from "../form/ActivityForm";
@@ -9,7 +8,6 @@ import ActivityStore from "../../../app/stores/activityStore";
 
 interface IActivityDashboardProps {
   setEditMode: (editMode: boolean) => void;
-  setSelectedActivity: (activity: IActivity | null) => void;
   deleteActivity: (e: SyntheticEvent<HTMLButtonElement>, id: string) => void;
   submitting: boolean;
   target: string;
@@ -17,7 +15,6 @@ interface IActivityDashboardProps {
 
 const ActivityDashboard: React.FC<IActivityDashboardProps> = ({
   setEditMode,
-  setSelectedActivity,
   deleteActivity,
   submitting,
   target,
@@ -35,15 +32,12 @@ const ActivityDashboard: React.FC<IActivityDashboardProps> = ({
       </Grid.Column>
       <Grid.Column width={6}>
         {selectedActivity && !editMode && (
-          <ActivityDetails
-            setSelectedActivity={setSelectedActivity}
-          />
+          <ActivityDetails />
         )}
         {editMode && (
           <ActivityForm
-            key={(selectedActivity && selectedActivity.id) || null}
-            setEditMode={setEditMode}
-            activity={null}
+            key={(selectedActivity && selectedActivity.id) || 0}
+            activity={selectedActivity!}
           />
         )}
       </Grid.Column>
