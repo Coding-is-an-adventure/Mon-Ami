@@ -16,7 +16,7 @@ const App = () => {
   }, [activityStore]);
 
   if (activityStore.initialLoading)
-    return <Loading content="Loading activities...." />;
+    return <Loading content="Loading activities..." />;
   else
     return (
       <Fragment>
