@@ -4,7 +4,8 @@ import agent from "../api/agent";
 import { IActivity } from "../models/Activity";
 
 class ActivityStore {
-  @observable activities: IActivity[] = [];
+  @observable activityRegistry = new Map();
+  //@observable activities: IActivity[] = [];
   @observable selectedActivity: IActivity | undefined;
   @observable editMode: boolean = false;
 
@@ -16,7 +17,9 @@ class ActivityStore {
   }
 
   @computed get activitiesByDate() {
-    return this.activities.slice().sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
+    return Array.from(this.activityRegistry.values()).sort(
+      (a, b) => Date.parse(a.date) - Date.parse(b.date)
+    );
   }
 
   @action loadActivities = async () => {
@@ -25,7 +28,7 @@ class ActivityStore {
       const activities = await agent.Activities.list();
       activities.forEach((activity) => {
         activity.date = activity.date.split(".")[0];
-        this.activities.push(activity);
+        this.activityRegistry.set(activity.id, activity);
       });
     } catch (error) {
       console.log(error);
@@ -35,7 +38,7 @@ class ActivityStore {
   };
 
   @action selectActivity = (id: string) => {
-    this.selectedActivity = this.activities.find((a) => a.id === id);
+    this.selectedActivity = this.activityRegistry.get(id);
     this.editMode = false;
   };
 
@@ -48,7 +51,7 @@ class ActivityStore {
     this.submitting = true;
     try {
       await agent.Activities.create(activity);
-      this.activities.push(activity);
+      this.activityRegistry.set(activity.id, activity);
       this.editMode = false;
     } catch (error) {
       console.error();
