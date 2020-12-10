@@ -19,9 +19,6 @@ import { IActivity } from "../models/activity";
 const App = () => {
   const activityStore = useContext(ActivityStore);
   const [activities, setActivities] = useState<IActivity[]>([]);
-  const [selectedActivity, setSelectedActivity] = useState<IActivity | null>(
-    null
-  );
   const [editMode, setEditMode] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState(false);
   const [target, setTarget] = useState("");
