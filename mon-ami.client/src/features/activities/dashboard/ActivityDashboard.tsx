@@ -36,7 +36,6 @@ const ActivityDashboard: React.FC<IActivityDashboardProps> = ({
       <Grid.Column width={6}>
         {selectedActivity && !editMode && (
           <ActivityDetails
-            setEditMode={setEditMode}
             setSelectedActivity={setSelectedActivity}
           />
         )}
