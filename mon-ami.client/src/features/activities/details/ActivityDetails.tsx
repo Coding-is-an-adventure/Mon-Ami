@@ -12,7 +12,12 @@ const ActivityDetails: React.FC<IActivityDetailsProps> = ({
   setSelectedActivity,
 }) => {
   const activityStore = useContext(ActivityStore);
-  const { selectedActivity: activity, openEditForm } = activityStore;
+  const {
+    selectedActivity: activity,
+    openEditForm,
+    cancelFormOpen,
+    cancelSelectedActivity,
+  } = activityStore;
   return (
     <Card fluid>
       <Image

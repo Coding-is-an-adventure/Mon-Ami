@@ -36,11 +36,6 @@ class ActivityStore {
     }
   };
 
-  @action selectActivity = (id: string) => {
-    this.selectedActivity = this.activityRegistry.get(id);
-    this.editMode = false;
-  };
-
   @action openCreateForm = () => {
     this.editMode = true;
     this.selectedActivity = undefined;
@@ -49,7 +44,20 @@ class ActivityStore {
   @action openEditForm = (id: string) => {
     this.selectedActivity = this.activityRegistry.get(id);
     this.editMode = true;
-  }
+  };
+
+  @action cancelFormOpen = () => {
+    this.editMode = false;
+  };
+
+  @action selectActivity = (id: string) => {
+    this.selectedActivity = this.activityRegistry.get(id);
+    this.editMode = false;
+  };
+
+  @action cancelSelectedActivity = () => {
+    this.selectedActivity = undefined;
+  };
 
   @action createActivity = async (activity: IActivity) => {
     this.submitting = true;
