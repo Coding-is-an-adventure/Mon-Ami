@@ -8,11 +8,8 @@ import ActivityForm from "../form/ActivityForm";
 import ActivityStore from "../../../app/stores/activityStore";
 
 interface IActivityDashboardProps {
-  activities: IActivity[];
-  selectActivity: (id: string) => void;
   setEditMode: (editMode: boolean) => void;
   setSelectedActivity: (activity: IActivity | null) => void;
-  createActivity: (activity: IActivity) => void;
   editActivity: (activity: IActivity) => void;
   deleteActivity: (e: SyntheticEvent<HTMLButtonElement>, id: string) => void;
   submitting: boolean;
@@ -20,11 +17,8 @@ interface IActivityDashboardProps {
 }
 
 const ActivityDashboard: React.FC<IActivityDashboardProps> = ({
-  activities,
-  selectActivity,
   setEditMode,
   setSelectedActivity,
-  createActivity,
   editActivity,
   deleteActivity,
   submitting,
@@ -53,7 +47,6 @@ const ActivityDashboard: React.FC<IActivityDashboardProps> = ({
             key={(selectedActivity && selectedActivity.id) || null}
             setEditMode={setEditMode}
             activity={null}
-            createActivity={createActivity}
             editActivity={editActivity}
             submitting={submitting}
           />
