@@ -114,13 +114,13 @@ class ActivityStore {
         this.activityRegistry.set(activity.id, activity);
         this.selectedActivity = activity;
         this.editMode = false;
-      })
+      });
     } catch (error) {
       console.log(error);
     } finally {
       runInAction(() => {
         this.submitting = false;
-      })
+      });
     }
   };
 
@@ -135,14 +135,14 @@ class ActivityStore {
       await agent.Activities.delete(id);
       runInAction(() => {
         this.activityRegistry.delete(id);
-      })
+      });
     } catch (error) {
       console.error();
     } finally {
       runInAction(() => {
         this.submitting = false;
         this.target = "";
-      })
+      });
     }
   };
 }
