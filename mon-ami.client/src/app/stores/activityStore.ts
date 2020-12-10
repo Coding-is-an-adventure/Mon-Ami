@@ -1,15 +1,16 @@
 import { observable, action, computed, makeObservable } from "mobx";
-import { createContext } from "react";
+import { createContext, SyntheticEvent } from "react";
 import agent from "../api/agent";
 import { IActivity } from "../models/activity";
 
 class ActivityStore {
   @observable activityRegistry = new Map();
   @observable selectedActivity: IActivity | undefined;
+  
   @observable editMode: boolean = false;
-
   @observable initialLoading: boolean = false;
   @observable submitting: boolean = false;
+  @observable target: string = "";
 
   constructor() {
     makeObservable(this);
@@ -83,6 +84,23 @@ class ActivityStore {
       console.log(error);
     } finally {
       this.submitting = false;
+    }
+  };
+
+  @action deleteActivity = async (
+    event: SyntheticEvent<HTMLButtonElement>,
+    id: string
+  ) => {
+    try {
+      this.submitting = true;
+      this.target = event.currentTarget.name;
+      await agent.Activities.delete(id);
+      this.activityRegistry.delete(id);
+    } catch (error) {
+      console.error();
+    } finally {
+      this.submitting = false;
+      this.target = "";
     }
   };
 }
