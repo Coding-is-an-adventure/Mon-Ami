@@ -14,7 +14,7 @@ import Loading from "../layout/Loading";
 import agent from "../api/agent";
 import ActivityStore from "../stores/activityStore";
 import { observer } from "mobx-react-lite";
-import { IActivity } from "./../models/Activity";
+import { IActivity } from "../models/activity";
 
 const App = () => {
   const activityStore = useContext(ActivityStore);

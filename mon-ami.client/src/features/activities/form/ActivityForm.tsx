@@ -1,7 +1,7 @@
 import React, { useState, useContext, FormEvent } from "react";
 import ActivityStore from "../../../app/stores/activityStore";
 import { Segment, Form, Button } from "semantic-ui-react";
-import { IActivity } from "../../../app/models/Activity";
+import { IActivity } from "../../../app/models/activity";
 import { v4 as uuid } from "uuid";
 
 interface IActivityFormProps {

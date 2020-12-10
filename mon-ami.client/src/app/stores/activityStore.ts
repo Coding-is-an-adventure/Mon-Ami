@@ -1,7 +1,7 @@
 import { observable, action, computed, makeObservable } from "mobx";
 import { createContext } from "react";
 import agent from "../api/agent";
-import { IActivity } from "../models/Activity";
+import { IActivity } from "../models/activity";
 
 class ActivityStore {
   @observable activityRegistry = new Map();
