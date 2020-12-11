@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using API.Application.ErrorHandlers;
 using API.Domain;
 using API.Persistence;
 using FluentValidation;
@@ -57,7 +59,7 @@ namespace API.Application.Activities
 
                 if (activity == null)
                 {
-                    throw new Exception("Could not find the specified activity");
+                    throw new RestException(HttpStatusCode.NotFound, new { activity = "Not found" });
                 }
 
                 // if the left side is null, the right of the operator will be executed.
