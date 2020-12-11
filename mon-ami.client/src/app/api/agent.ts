@@ -3,6 +3,9 @@ import { IActivity } from "../models/activity";
 
 axios.defaults.baseURL = "https://localhost:44380/api";
 
+axios.interceptors.response.use(undefined, error => {
+  console.log(error.response);
+})
 const responseBody = (response: AxiosResponse) => response.data;
 
 const sleep = (ms: number) => (response: AxiosResponse) =>
@@ -11,13 +14,13 @@ const sleep = (ms: number) => (response: AxiosResponse) =>
   );
 
 const requests = {
-  get: (url: string) => axios.get(url).then(sleep(1000)).then(responseBody),
+  get: (url: string) => axios.get(url).then(sleep(900)).then(responseBody),
   post: (url: string, body: {}) =>
-    axios.post(url, body).then(sleep(1000)).then(responseBody),
+    axios.post(url, body).then(sleep(900)).then(responseBody),
   put: (url: string, body: {}) =>
-    axios.put(url, body).then(sleep(1000)).then(responseBody),
+    axios.put(url, body).then(sleep(900)).then(responseBody),
   delete: (url: string) =>
-    axios.delete(url).then(sleep(1000)).then(responseBody),
+    axios.delete(url).then(sleep(900)).then(responseBody),
 };
 
 const Activities = {
