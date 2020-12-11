@@ -17,10 +17,7 @@ class ActivityStore {
   @observable
   activityRegistry = new Map();
   @observable
-  selectedActivity: IActivity | undefined;
-
-  @observable
-  editMode: boolean = false;
+  activity: IActivity | null = null;
   @observable
   initialLoading: boolean = false;
   @observable
@@ -52,7 +49,8 @@ class ActivityStore {
       });
     } catch (error) {
       console.log(error);
-    } finally {
+    }
+    finally {
       runInAction(() => {
         this.initialLoading = false;
       });
@@ -60,31 +58,34 @@ class ActivityStore {
   };
 
   @action
-  openCreateForm = () => {
-    this.editMode = true;
-    this.selectedActivity = undefined;
+  loadActivity = async (id: string) => {
+    let activity = this.getActivity(id);
+    if (activity) {
+      this.activity = activity;
+    } else {
+      this.initialLoading = true;
+      try {
+        activity = await agent.Activities.details(id);
+        runInAction(() => {
+          this.activity = activity;
+        });
+      } catch (error) {
+        console.error();
+      } finally {
+        runInAction(() => {
+          this.initialLoading = false;
+        });
+      }
+    }
   };
 
   @action
-  openEditForm = (id: string) => {
-    this.selectedActivity = this.activityRegistry.get(id);
-    this.editMode = true;
+  clearActivity = () => {
+    this.activity = null;
   };
 
-  @action
-  cancelFormOpen = () => {
-    this.editMode = false;
-  };
-
-  @action
-  selectActivity = (id: string) => {
-    this.selectedActivity = this.activityRegistry.get(id);
-    this.editMode = false;
-  };
-
-  @action
-  cancelSelectedActivity = () => {
-    this.selectedActivity = undefined;
+  getActivity = (id: string) => {
+    return this.activityRegistry.get(id);
   };
 
   @action
@@ -94,7 +95,6 @@ class ActivityStore {
       await agent.Activities.create(activity);
       runInAction(() => {
         this.activityRegistry.set(activity.id, activity);
-        this.editMode = false;
       });
     } catch (error) {
       console.error();
@@ -112,8 +112,7 @@ class ActivityStore {
       await agent.Activities.update(activity);
       runInAction(() => {
         this.activityRegistry.set(activity.id, activity);
-        this.selectedActivity = activity;
-        this.editMode = false;
+        this.activity = activity;
       });
     } catch (error) {
       console.log(error);
