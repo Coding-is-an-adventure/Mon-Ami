@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using API.Application.ErrorHandlers;
 using API.Domain;
 using API.Persistence;
 using MediatR;
@@ -28,6 +30,12 @@ namespace API.Application.Activities
                 CancellationToken token)
             {
                 Activity activity = await _context.Activities.FindAsync(new object[] { request.Id }, token);
+
+                if (activity == null)
+                {
+                    throw new RestException(HttpStatusCode.NotFound, new { activity = "Not found" });
+                }
+
                 return activity;
             }
         }
