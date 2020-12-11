@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using API.Application.ErrorHandlers;
 using API.Domain;
 using API.Persistence;
 using MediatR;
@@ -31,7 +33,7 @@ namespace API.Application.Activities
 
                 if (activity == null)
                 {
-                    throw new Exception("Could not find the specified activity");
+                    throw new RestException(HttpStatusCode.NotFound, new { activity = "Not found" });
                 }
 
                 _context.Remove(activity);
