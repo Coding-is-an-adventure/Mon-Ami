@@ -13,7 +13,7 @@ namespace Mon_Ami.API.Middleware
     public class ErrorHandlingMiddleware
     {
         private readonly RequestDelegate _next;
-        private ILogger<ErrorHandlingMiddleware> _logger;
+        private readonly ILogger<ErrorHandlingMiddleware> _logger;
 
         public ErrorHandlingMiddleware(
             RequestDelegate next, ILogger<ErrorHandlingMiddleware> logger)
