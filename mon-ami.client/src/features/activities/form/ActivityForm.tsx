@@ -124,7 +124,7 @@ const ActivityForm: React.FC<RouteComponentProps<IDetailParameters>> = ({
           content="Submit"
         />
         <Button
-          onClick={() => history.push("./activities")}
+          onClick={() => history.push("/activities")}
           floated="right"
           content="Cancel"
         />
