@@ -1,11 +1,26 @@
 import axios, { AxiosResponse } from "axios";
+import { history } from "../..";
 import { IActivity } from "../models/activity";
+import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = "https://localhost:44380/api";
 
 axios.interceptors.response.use(undefined, error => {
-  console.log(error.response);
+  if (error.message === 'Network Error' && !error.response) {
+      toast.error('Network error - make sure API is running!')
+  }
+  const {status, data, config} = error.response;
+  if (status === 404) {
+      history.push('/notfound')
+  }
+  if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')) {
+      history.push('/notfound')
+  }
+  if (status === 500) {
+      toast.error('Server error - the server is currently unavailable, please try again later.')
+  }
 })
+
 const responseBody = (response: AxiosResponse) => response.data;
 
 const sleep = (ms: number) => (response: AxiosResponse) =>
