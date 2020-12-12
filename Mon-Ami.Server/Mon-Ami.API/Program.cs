@@ -35,10 +35,10 @@ namespace Mon_Ami.API
             //        // Auto seeds the database with sample data.
             //        Seed.SeedDate(context);
             //    }
-            //    catch (Exception ex)
+            //    catch (Exception exception)
             //    {
             //        ILogger logger = services.GetRequiredService<ILogger<Program>>();
-            //        logger.LogError(ex, "An error occured during the database migration");
+            //        logger.LogError(exception, "An error occured during the database migration");
             //    }
             //}
             //host.Run();
