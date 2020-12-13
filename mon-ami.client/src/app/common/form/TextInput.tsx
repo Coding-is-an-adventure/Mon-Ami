@@ -2,11 +2,11 @@ import React from "react";
 import { FieldRenderProps } from "react-final-form";
 import { Form, FormFieldProps, Label } from "semantic-ui-react";
 
-interface TextInputProps
+interface ITextInputProps
   extends FieldRenderProps<string, any>,
     FormFieldProps {}
 
-const TextInput: React.FC<TextInputProps> = ({
+const TextInput: React.FC<ITextInputProps> = ({
   input,
   width,
   type,
