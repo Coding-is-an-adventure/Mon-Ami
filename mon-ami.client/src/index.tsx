@@ -12,13 +12,13 @@ import reportWebVitals from "./reportWebVitals";
 export const history = createBrowserHistory();
 
 ReactDOM.render(
-  <React.StrictMode>
+  //<React.StrictMode>
   <Router history={history}>
     <ScrollToTop>
       <App />
     </ScrollToTop>
   </Router>,
-  </React.StrictMode>,
+  //</React.StrictMode>,
   document.getElementById("root")
 );
 
