@@ -3,10 +3,10 @@ import { FieldRenderProps } from "react-final-form";
 import { Form, FormFieldProps, Label } from "semantic-ui-react";
 
 interface TextInputProps
-  extends FieldRenderProps<string, HTMLInputElement>,
+  extends FieldRenderProps<string, any>,
     FormFieldProps {}
 
-export const TextInput: React.FC<TextInputProps> = ({
+const TextInput: React.FC<TextInputProps> = ({
   input,
   width,
   type,
@@ -24,3 +24,5 @@ export const TextInput: React.FC<TextInputProps> = ({
     </Form.Field>
   );
 };
+
+export default TextInput;
