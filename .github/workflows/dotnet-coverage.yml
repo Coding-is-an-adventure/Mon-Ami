@@ -23,9 +23,12 @@ on:
       - '**/common.props'
 jobs:
   build:
- 
     runs-on: ubuntu-latest
- 
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./Mon-Ami.Server
+        
     steps:
     - uses: actions/checkout@v1
     - name: Setup .NET Core
