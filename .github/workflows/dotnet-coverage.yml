@@ -40,6 +40,7 @@ jobs:
     - name: Publish Code Coverage Report
       uses: coverallsapp/github-action@v1.0.1
       with:
+       github-token: ${{ secrets.github_token }}
        file: ./coverage.xml
        directory: ./coverage/reports/
        flags: unittests
