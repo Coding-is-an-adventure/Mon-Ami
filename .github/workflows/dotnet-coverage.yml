@@ -31,11 +31,19 @@ jobs:
         
     steps:
     - uses: actions/checkout@v1
-    - name: Setup .NET Core
+    - name: Setup .NET 5
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 5.0.100
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
-    - name: Run unit tests
-      run: dotnet test --no-build --configuration Release
+    - name: Create Code Coverage Report
+      run: dotnet test --no-build --configuration Release /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=lcov
+    - name: Publish Code Coverage Report
+      uses: coverallsapp/github-action@v1.0.1
+      with:
+       file: ./coverage.xml
+       directory: ./coverage/reports/
+       flags: unittests
+       env_vars: OS,C#
+       fail_ci_if_error: true
+       path_to_write_report: ./coverage/codecov_report.txt
+       verbose: true
