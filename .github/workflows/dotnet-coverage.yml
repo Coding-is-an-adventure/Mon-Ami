@@ -1,0 +1,41 @@
+name: .NET Core Code Coverage
+ 
+on:
+  push:
+    branches: [ main ]
+    paths-ignore:
+      - '**.gitignore'
+      - '**.dockerignore'
+      - '**/README.md'
+      - '**/stylecop.props'
+      - '**/stylecop.ruleset'
+      - '**/stylecop.json'
+      - '**/common.props'
+  pull_request:
+    branches: [ main ]
+    paths-ignore:
+      - '**.gitignore'
+      - '**.dockerignore'
+      - '**/README.md'
+      - '**/stylecop.props'
+      - '**/stylecop.ruleset'
+      - '**/stylecop.json'
+      - '**/common.props'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./Mon-Ami.Server
+        
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 5.0.100
+    - name: Build with dotnet
+      run: dotnet build --configuration Release
+    - name: Run unit tests
+      run: dotnet test --no-build --configuration Release
