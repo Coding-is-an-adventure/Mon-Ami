@@ -25,6 +25,7 @@
   <ItemGroup>
     <ProjectReference Include="..\API.Application\API.Application.csproj" />
     <ProjectReference Include="..\API.Persistence\API.Persistence.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
   <Import Project="..\common.props" />
