@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using API.Application.ErrorHandlers;
+using API.Application.Interfaces;
 using API.Domain;
 using API.Persistence;
 using FluentValidation;
@@ -36,13 +37,16 @@ namespace API.Application.User
         {
             private readonly UserManager<AppUser> _userManager;
             private readonly SignInManager<AppUser> _signInManager;
+            private readonly IJwtGenerator _jwtGenerator;
 
             public Handler(
                 UserManager<AppUser> userManager,
-                SignInManager<AppUser> signInManager)
+                SignInManager<AppUser> signInManager,
+                IJwtGenerator jwtGenerator)
             {
                 _userManager = userManager;
                 _signInManager = signInManager;
+                _jwtGenerator = jwtGenerator;
             }
 
             public async Task<User> Handle(
@@ -60,16 +64,16 @@ namespace API.Application.User
 
                 if (result.Succeeded)
                 {
-                    // TODO: generate token
                     return new User
                     {
                         DisplayName = user.DisplayName,
                         UserName = user.UserName,
                         Image = null,
-                        Token = "Todo: This needs to be a token"
+                        Token = _jwtGenerator.CreateToken(user),
                     };
                 }
 
+                // Incorrect password
                 throw new RestException(HttpStatusCode.Unauthorized);
             }
         }
