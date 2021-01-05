@@ -1,15 +1,22 @@
+using System.Text;
 using API.Application.Activities;
+using API.Application.Interfaces;
 using API.Domain;
 using API.Persistence;
 using FluentValidation.AspNetCore;
+using Infrastructure.Security;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Mon_Ami.API.Middleware;
 
@@ -41,10 +48,14 @@ namespace Mon_Ami.API
             });
 
             services.AddMediatR(typeof(List.Handler).Assembly);
-            services.AddControllers()
-                .AddFluentValidation(config =>
+            services.AddControllers(options =>
+            {
+                AuthorizationPolicy policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            })
+                .AddFluentValidation(configuration =>
                 {
-                    config.RegisterValidatorsFromAssemblyContaining<Create>();
+                    configuration.RegisterValidatorsFromAssemblyContaining<Create>();
                 });
 
             var builder = services.AddIdentityCore<AppUser>();
@@ -52,7 +63,20 @@ namespace Mon_Ami.API
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
 
-            services.AddAuthentication();
+            SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = key,
+                        ValidateAudience = false,
+                        ValidateIssuer = false
+                    };
+                });
+
+            services.AddScoped<IJwtGenerator, JwtGenerator>();
 
             services.AddSwaggerGen(c =>
             {
@@ -78,6 +102,7 @@ namespace Mon_Ami.API
 
             app.UseCors("CorsPolicy");
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
