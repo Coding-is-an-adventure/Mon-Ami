@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using API.Application.User;
-using API.Domain;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Mon_Ami.API.Controllers
 {
+    [AllowAnonymous]
     public class UserController : APIControllerBase
     {
         [HttpPost("login")]
