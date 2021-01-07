@@ -2,8 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Domain;
 using API.Persistence;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,8 +21,8 @@ namespace Mon_Ami.API
         {
             CreateHostBuilder(args).Build().Run();
 
-            //Inputs test values into the database. Don't use this in production!!
-            //IHost host = CreateHostBuilder(args).Build();
+            // Inputs test values into the database. Don't use this in production, It will not work with Docker!!
+            // IHost host = CreateHostBuilder(args).Build();
             //using (IServiceScope scope = host.Services.CreateScope())
             //{
             //    IServiceProvider services = scope.ServiceProvider;
@@ -28,12 +30,13 @@ namespace Mon_Ami.API
             //    try
             //    {
             //        DataContext context = services.GetRequiredService<DataContext>();
+            //        var userManager = services.GetRequiredService<UserManager<AppUser>>();
 
             //        // Auto applies the latest database migrations
             //        context.Database.Migrate();
 
             //        // Auto seeds the database with sample data.
-            //        Seed.SeedDate(context);
+            //        Seed.SeedDate(context, userManager).Wait();
             //    }
             //    catch (Exception exception)
             //    {

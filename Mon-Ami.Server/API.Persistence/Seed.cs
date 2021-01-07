@@ -1,14 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using API.Domain;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Persistence
 {
     public class Seed
     {
-        public static void SeedDate(DataContext context)
+        public static async Task SeedDate(DataContext context, UserManager<AppUser> userManager)
         {
+            if (userManager.Users.Any() == false)
+            {
+                var users = new List<AppUser>
+                {
+                    new AppUser
+                    {
+                        DisplayName = "Eddy",
+                        UserName = "eddy",
+                        Email = "eddy@nonvalid.com"
+                    },
+
+                    new AppUser
+                    {
+                        DisplayName = "Sarah",
+                        UserName = "sarah",
+                        Email = "sarah@nonvalid.com"
+                    },
+
+                    new AppUser
+                    {
+                        DisplayName = "Daan",
+                        UserName = "daan",
+                        Email = "daan@nonvalid.com"
+                    },
+
+                    new AppUser
+                    {
+                        DisplayName = "Roos",
+                        UserName = "roos",
+                        Email = "roos@nonvalid.com"
+                    },
+                };
+
+                for (int i = 0; i < users.Count; i++)
+                {
+                    await userManager.CreateAsync(users[i], "Password2020!@");
+                }
+            }
+
             if (context.Activities.Any() == false)
             {
                 List<Activity> activities = new List<Activity>
