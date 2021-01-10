@@ -14,6 +14,7 @@ import HomePage from "../../features/home/HomePage";
 import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 import ActivityDetails from "../../features/activities/details/ActivityDetails";
 import ActivityForm from "../../features/activities/form/ActivityForm";
+import LoginForm from "../../features/user/LoginForm";
 import NotFound from "./NotFound";
 
 import { ToastContainer } from "react-toastify";
@@ -39,6 +40,7 @@ const App: React.FC<RouteComponentProps> = ({ location }) => {
                   path={["/createActivity", "/manage/:id"]}
                   component={ActivityForm}
                 />
+                <Route path="/login" component={LoginForm} />
                 <Route component={NotFound} />
               </Switch>
             </Container>
