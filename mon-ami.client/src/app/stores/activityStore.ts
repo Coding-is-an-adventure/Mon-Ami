@@ -3,19 +3,18 @@ import {
   action,
   computed,
   makeObservable,
-  configure,
   runInAction,
 } from "mobx";
-import { createContext, SyntheticEvent } from "react";
+import { RootStore } from "./rootStore";
+import { SyntheticEvent } from "react";
 import agent from "../api/agent";
 import { IActivity } from "../models/activity";
 import { history } from "../..";
 import { toast } from "react-toastify";
 
-// Enforce the usage of an action when mutating the state of an observable in MobX.
-configure({ enforceActions: "always" });
+export default class ActivityStore {
+  rootStore: RootStore;
 
-class ActivityStore {
   @observable
   activityRegistry = new Map();
   @observable
@@ -27,7 +26,8 @@ class ActivityStore {
   @observable
   target: string = "";
 
-  constructor() {
+  constructor(rootStore: RootStore) {
+    this.rootStore = rootStore;
     makeObservable(this);
   }
 
@@ -96,7 +96,7 @@ class ActivityStore {
         runInAction(() => {
           this.initialLoading = false;
         });
-      } 
+      }
     }
   };
 
@@ -170,5 +170,3 @@ class ActivityStore {
     }
   };
 }
-
-export default createContext(new ActivityStore());
