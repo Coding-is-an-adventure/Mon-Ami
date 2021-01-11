@@ -4,7 +4,7 @@ import { IActivity } from "../models/activity";
 import { toast } from "react-toastify";
 import { IUser, IUserFormValues } from "../models/user";
 
-axios.defaults.baseURL = "https://localhost:44380/api";
+axios.defaults.baseURL = "https://localhost:5001/api";
 
 axios.interceptors.response.use(undefined, (error) => {
   if (error.message === "Network Error" && !error.response) {
@@ -26,7 +26,7 @@ axios.interceptors.response.use(undefined, (error) => {
       "Server error - the server is currently unavailable, please try again later."
     );
   }
-  throw error;
+  throw error.response;
 });
 
 const responseBody = (response: AxiosResponse) => response.data;
