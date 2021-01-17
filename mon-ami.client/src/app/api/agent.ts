@@ -6,6 +6,17 @@ import { IUser, IUserFormValues } from "../models/user";
 
 axios.defaults.baseURL = "https://localhost:5001/api";
 
+axios.interceptors.request.use(
+  (config) => {
+    const token = window.localStorage.getItem("jwt");
+    if (token) config.headers.Authorization = `Bearer ${token}`;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 axios.interceptors.response.use(undefined, (error) => {
   if (error.message === "Network Error" && !error.response) {
     toast.error("Network error - make sure API is running!");
@@ -31,19 +42,19 @@ axios.interceptors.response.use(undefined, (error) => {
 
 const responseBody = (response: AxiosResponse) => response.data;
 
-const sleep = (ms: number) => (response: AxiosResponse) =>
-  new Promise<AxiosResponse>((resolve) =>
-    setTimeout(() => resolve(response), ms)
-  );
+// const sleep = (ms: number) => (response: AxiosResponse) =>
+//   new Promise<AxiosResponse>((resolve) =>
+//     setTimeout(() => resolve(response), ms)
+//   );
 
 const requests = {
-  get: (url: string) => axios.get(url).then(sleep(900)).then(responseBody),
+  get: (url: string) => axios.get(url).then(responseBody),
   post: (url: string, body: {}) =>
-    axios.post(url, body).then(sleep(900)).then(responseBody),
+    axios.post(url, body).then(responseBody),
   put: (url: string, body: {}) =>
-    axios.put(url, body).then(sleep(900)).then(responseBody),
+    axios.put(url, body).then(responseBody),
   delete: (url: string) =>
-    axios.delete(url).then(sleep(900)).then(responseBody),
+    axios.delete(url).then(responseBody),
 };
 
 const User = {
@@ -66,5 +77,5 @@ const Activities = {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   Activities,
-  User
+  User,
 };
