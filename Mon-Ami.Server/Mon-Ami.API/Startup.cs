@@ -1,3 +1,4 @@
+using System;
 using System.Text;
 using API.Application.Activities;
 using API.Application.Interfaces;
@@ -83,6 +84,31 @@ namespace Mon_Ami.API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Mon_Ami.API", Version = "v1" });
                 c.CustomSchemaIds(type => type.ToString());
+
+                // To Enable authorization using Swagger (JWT)
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "Bearer",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Description = "Please enter a valid JSON Web Token. \r\n\r\nExample: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9",
+                });
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            }
+                        },
+                        Array.Empty<string>()
+                    }
+                });
             });
         }
 

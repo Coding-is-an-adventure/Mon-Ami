@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import ActivityStore from "../../../app/stores/activityStore";
+import { RootStoreContext } from "../../../app/stores/rootStore";
 import { Segment, Form, Button, Grid } from "semantic-ui-react";
 import { ActivityFormModel } from "../../../app/models/activity";
 import { observer } from "mobx-react-lite";
@@ -42,13 +42,13 @@ const ActivityForm: React.FC<RouteComponentProps<IDetailParameters>> = ({
   match,
   history,
 }) => {
-  const activityStore = useContext(ActivityStore);
+  const rootStore = useContext(RootStoreContext);
   const {
     submitting,
     loadActivity,
     createActivity,
     editActivity,
-  } = activityStore;
+  } = rootStore.activityStore;
 
   const [activity, setActivity] = useState(new ActivityFormModel());
   const [loading, setLoading] = useState(false);

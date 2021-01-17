@@ -37,6 +37,7 @@ namespace Mon_Ami.API.Middleware
         private async Task HandleExeptionAsync(HttpContext context, Exception exception, ILogger<ErrorHandlingMiddleware> logger)
         {
             object errors = null;
+
             switch (exception)
             {
                 case RestException re:
