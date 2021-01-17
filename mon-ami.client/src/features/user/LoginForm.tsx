@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
-import { Button, Form, Label } from "semantic-ui-react";
+import { Button, Form, Header } from "semantic-ui-react";
+import ErrorMessage from "../../app/common/form/ErrorMessage.jsx";
 import { Form as FinalForm, Field } from "react-final-form";
 import TextInput from "./../../app/common/form/TextInput";
 import { RootStoreContext } from "../../app/stores/rootStore";
@@ -26,13 +27,18 @@ const LoginForm: React.FC = () => {
       render={({
         handleSubmit,
         submitting,
-        form,
         submitError,
         invalid,
         pristine,
-        dirtySinceLastSubmit
+        dirtySinceLastSubmit,
       }) => (
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} error>
+          <Header
+            as="h2"
+            content="Login to Mon Ami"
+            color="teal"
+            textAlign="center"
+          />
           <Field name="email" component={TextInput} placeholder="Email" />
           <Field
             name="password"
@@ -41,21 +47,18 @@ const LoginForm: React.FC = () => {
             type="password"
           />
           {submitError && !dirtySinceLastSubmit && (
-            <Label
-              color="red"
-              basic
-              content={"The specified email address or password is invalid"}
+            <ErrorMessage
+              error={submitError}
+              text="Invalid email or password"
             />
           )}
-          <br />
-          <br />
           <Button
             disabled={(invalid && !dirtySinceLastSubmit) || pristine}
             loading={submitting}
-            positive
+            color="teal"
             content="Login"
+            fluid
           />
-          <pre>{JSON.stringify(form.getState(), null, 2)}</pre>
         </Form>
       )}
     />
