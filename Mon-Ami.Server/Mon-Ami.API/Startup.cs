@@ -6,6 +6,7 @@ using API.Domain;
 using API.Persistence;
 using AutoMapper;
 using FluentValidation.AspNetCore;
+using Infrastructure.Pictures;
 using Infrastructure.Security;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -93,6 +94,8 @@ namespace Mon_Ami.API
 
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddScoped<IPictureAccessor, PictureAccessor>();
+            services.Configure<CloudinarySettings>(Configuration.GetSection("Cloudinary"));
 
             services.AddSwaggerGen(c =>
             {
