@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace API.Domain
@@ -23,5 +24,7 @@ namespace API.Domain
 
         [MaxLength(95)]
         public string Venue { get; set; }
+
+        public virtual ICollection<UserActivity> UserActivities { get; set; }
     }
 }

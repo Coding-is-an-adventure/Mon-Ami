@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Identity;
 
 namespace API.Domain
@@ -10,5 +6,7 @@ namespace API.Domain
     public class AppUser : IdentityUser
     {
         public string DisplayName { get; set; }
+
+        public virtual ICollection<UserActivity> UserActivities { get; set; }
     }
 }
