@@ -29,7 +29,7 @@ namespace API.Application.Activities
                 Command request,
                 CancellationToken token)
             {
-                Activity activity = await _context.Activities.FindAsync(token, new { request.Id });
+                Activity activity = await _context.Activities.FindAsync(new object[] { request.Id }, token);
 
                 if (activity == null)
                 {

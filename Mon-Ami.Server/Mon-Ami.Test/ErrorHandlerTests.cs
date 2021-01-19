@@ -1,11 +1,10 @@
 ﻿using API.Application.Activities;
+using API.Application.Activities.DTOs;
 using API.Application.ErrorHandlers;
 using API.Persistence;
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Xunit;
@@ -15,6 +14,7 @@ namespace Mon_Ami.Test
     public class ErrorHandlerTests
     {
         private Details.Handler _handler;
+        private IMapper _mapper;
 
         public ErrorHandlerTests()
         {
@@ -30,9 +30,17 @@ namespace Mon_Ami.Test
                 .Options;
 
             var context = new DataContext(options);
-            _handler = new Details.Handler(context);
-        }
 
+            if(_mapper == null)
+            {
+                var mappingConfiguration = new MapperConfiguration(configuration => 
+                {
+                    configuration.AddProfile(new MappingProfile());
+                });
+                _mapper = mappingConfiguration.CreateMapper();
+            }
+            _handler = new Details.Handler(context, _mapper);
+        }
 
         [Fact]
         public async Task DetailsHandler_EntityNonExistant_ReturnsRestException()

@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using API.Application.Interfaces;
 using API.Domain;
 using API.Persistence;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Application.Activities
 {
@@ -46,10 +48,12 @@ namespace API.Application.Activities
         public class Handler : IRequestHandler<Command>
         {
             private readonly DataContext _context;
+            private readonly IUserAccessor _userAccessor;
 
-            public Handler(DataContext context)
+            public Handler(DataContext context, IUserAccessor userAccessor)
             {
                 _context = context;
+                _userAccessor = userAccessor;
             }
 
             public async Task<Unit> Handle(
@@ -68,7 +72,24 @@ namespace API.Application.Activities
                 };
 
                 _context.Activities.Add(activity);
+
+                // Does not need a null check.
+                // The user always to be validated before they can access an endpoint.
+                AppUser user = await _context.Users.SingleOrDefaultAsync(x =>
+                    x.UserName == _userAccessor.GetCurrentUsername());
+
+                UserActivity attendee = new UserActivity
+                {
+                    AppUser = user,
+                    Activity = activity,
+                    IsHost = true,
+                    DateJoined = DateTime.Now
+                };
+
+                _context.UserActivities.Add(attendee);
+
                 bool succes = await _context.SaveChangesAsync(token) > 0;
+
                 if (succes == true)
                 {
                     return Unit.Value;

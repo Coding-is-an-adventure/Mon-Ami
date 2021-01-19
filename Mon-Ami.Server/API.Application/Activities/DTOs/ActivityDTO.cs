@@ -1,30 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
-namespace API.Domain
+namespace API.Application.Activities.DTOs
 {
-    public class Activity
+    public class ActivityDTO
     {
         public Guid Id { get; set; }
 
-        [MaxLength(60)]
         public string Title { get; set; }
 
-        [MaxLength(60)]
         public string Description { get; set; }
 
-        [MaxLength(60)]
         public string Category { get; set; }
 
         public DateTime Date { get; set; }
 
-        [MaxLength(35)]
         public string City { get; set; }
 
-        [MaxLength(95)]
         public string Venue { get; set; }
 
-        public virtual ICollection<UserActivity> UserActivities { get; set; }
+        [JsonPropertyName("attendees")]
+        public ICollection<AttendeeDTO> UserActivities { get; set; }
     }
 }

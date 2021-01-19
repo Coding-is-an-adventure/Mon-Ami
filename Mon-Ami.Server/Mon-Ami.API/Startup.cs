@@ -4,6 +4,7 @@ using API.Application.Activities;
 using API.Application.Interfaces;
 using API.Domain;
 using API.Persistence;
+using AutoMapper;
 using FluentValidation.AspNetCore;
 using Infrastructure.Security;
 using MediatR;
@@ -37,6 +38,7 @@ namespace Mon_Ami.API
         {
             services.AddDbContext<DataContext>(options =>
             {
+                options.UseLazyLoadingProxies();
                 options.UseSqlServer(Configuration.GetConnectionString("Default"));
             });
 
@@ -49,6 +51,9 @@ namespace Mon_Ami.API
             });
 
             services.AddMediatR(typeof(List.Handler).Assembly);
+
+            services.AddAutoMapper(typeof(List.Handler));
+
             services.AddControllers(options =>
             {
                 AuthorizationPolicy policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
@@ -63,6 +68,15 @@ namespace Mon_Ami.API
             var identityBuilder = new IdentityBuilder(builder.UserType, builder.Services);
             identityBuilder.AddEntityFrameworkStores<DataContext>();
             identityBuilder.AddSignInManager<SignInManager<AppUser>>();
+
+            services.AddAuthorization(option =>
+            {
+                option.AddPolicy("IsActivityHost", policy =>
+                {
+                    policy.Requirements.Add(new IsHostRequirement());
+                });
+            });
+            services.AddTransient<IAuthorizationHandler, IsHostRequirementHandler>();
 
             SymmetricSecurityKey key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["TokenKey"]));
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
