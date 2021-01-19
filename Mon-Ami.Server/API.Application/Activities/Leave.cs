@@ -49,12 +49,12 @@ namespace API.Application.Activities
                     x =>
                     x.ActivityId == activity.Id && x.AppUserId == user.Id, token);
 
-                if (attendance.IsHost)
+                if (attendance.IsHost == true)
                 {
                     throw new RestException(HttpStatusCode.BadRequest, new { Attendance = "You cannot remove yourself as a host" });
                 }
 
-                if (attendance != null)
+                if (attendance == null)
                 {
                     return Unit.Value;
                 }

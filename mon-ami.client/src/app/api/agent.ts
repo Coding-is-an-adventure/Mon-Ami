@@ -72,6 +72,8 @@ const Activities = {
   update: (activity: IActivity) =>
     requests.put(`./activities/${activity.id}`, activity),
   delete: (id: string) => requests.delete(`./activities/${id}`),
+  attend: (id: string) => requests.post(`/activities/${id}/attend`, {}),
+  leave: (id: string) => requests.delete(`/activities/${id}/attend`)
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
