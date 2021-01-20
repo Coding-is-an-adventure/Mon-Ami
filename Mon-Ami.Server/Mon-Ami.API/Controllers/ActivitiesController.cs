@@ -4,7 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using API.Application.Activities;
 using API.Application.Activities.DTOs;
-using API.Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
