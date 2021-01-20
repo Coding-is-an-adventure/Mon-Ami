@@ -7,6 +7,10 @@ namespace API.Domain
     {
         public string DisplayName { get; set; }
 
+        public string Biography { get; set; }
+
         public virtual ICollection<UserActivity> UserActivities { get; set; }
+
+        public virtual ICollection<Picture> Pictures { get; set; }
     }
 }
