@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Item, Button, Segment, Icon, Label } from "semantic-ui-react";
 import { ActivityListItemAttendees } from "./ActivityListItemAttendees";
-import { IActivity, IAttendee } from "../../../app/models/activity";
+import { IActivity } from "../../../app/models/activity";
 import { format } from "date-fns";
 
 interface ActivityListItemProps {
@@ -10,7 +10,7 @@ interface ActivityListItemProps {
 }
 
 const ActivityListItem: React.FC<ActivityListItemProps> = ({ activity }) => {
-  const host: IAttendee = activity.attendees.filter(x => x.isHost)[0];
+  const host = activity.attendees.filter((x) => x.isHost)[0];
   return (
     <Segment.Group>
       <Segment>
@@ -19,13 +19,19 @@ const ActivityListItem: React.FC<ActivityListItemProps> = ({ activity }) => {
             <Item.Image
               size="tiny"
               circular
-              src={"/assets/user.png"}
+              src={host.image || "/assets/user.png"}
+              style={{ marginBottom: 3 }}
             />
             <Item.Content>
               <Item.Header as={Link} to={`/activities/${activity.id}`}>
                 {activity.title}
               </Item.Header>
-              <Item.Description>Hosted by {host.displayName}</Item.Description>
+              <Item.Description>
+                Hosted by{" "}
+                <Link to={`/profile/${host.username}`}>
+                  {host.displayName}{" "}
+                </Link>
+              </Item.Description>
               {activity.isHost && (
                 <Item.Description>
                   <Label
