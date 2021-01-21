@@ -34,7 +34,7 @@ namespace API.Application.Activities
                 CancellationToken token)
             {
                 Activity activity =
-                    await _context.Activities.FindAsync(new object[] { request.Id });
+                    await _context.Activities.FindAsync(new object[] { request.Id }, token);
 
                 if (activity == null)
                 {

@@ -75,8 +75,8 @@ namespace API.Application.Activities
 
                 // Does not need a null check.
                 // The user always to be validated before they can access an endpoint.
-                AppUser user = await _context.Users.SingleOrDefaultAsync(x =>
-                    x.UserName == _userAccessor.GetCurrentUsername());
+                AppUser user = await _context.Users.SingleOrDefaultAsync(
+                    x => x.UserName == _userAccessor.GetCurrentUsername(), token);
 
                 UserActivity attendee = new UserActivity
                 {
