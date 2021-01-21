@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using API.Application.Comments.DTOs;
 
 namespace API.Application.Activities.DTOs
 {
@@ -22,5 +23,8 @@ namespace API.Application.Activities.DTOs
 
         [JsonPropertyName("attendees")]
         public ICollection<AttendeeDTO> UserActivities { get; set; }
+
+        [JsonPropertyName("comments")]
+        public ICollection<CommentDTO> Comments { get; set; }
     }
 }
