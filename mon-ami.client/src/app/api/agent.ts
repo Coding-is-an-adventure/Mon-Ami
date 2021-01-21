@@ -90,6 +90,7 @@ const Profiles = {
     requests.postForm(`/pictures`, picture),
   setMainPicture: (id: string) => requests.post(`/pictures/${id}/setMain`, {}),
   deletePicture: (id: string) => requests.delete(`/pictures/${id}`),
+  updateProfile: (profile: Partial<IProfile>) => requests.put(`/profiles`, profile)
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
