@@ -1,5 +1,6 @@
 using System;
 using System.Text;
+using System.Threading.Tasks;
 using API.Application.Activities;
 using API.Application.Interfaces;
 using API.Domain;
@@ -22,6 +23,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Mon_Ami.API.Middleware;
+using Mon_Ami.API.SignalR;
 
 namespace Mon_Ami.API
 {
@@ -54,6 +56,8 @@ namespace Mon_Ami.API
             services.AddMediatR(typeof(List.Handler).Assembly);
 
             services.AddAutoMapper(typeof(List.Handler));
+
+            services.AddSignalR();
 
             services.AddControllers(options =>
             {
@@ -90,8 +94,21 @@ namespace Mon_Ami.API
                         ValidateAudience = false,
                         ValidateIssuer = false
                     };
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var accessToken = context.Request.Query["access_token"];
+                            var path = context.HttpContext.Request.Path;
+                            if (!string.IsNullOrEmpty(accessToken)
+                                && path.StartsWithSegments("/chat"))
+                            {
+                                context.Token = accessToken;
+                            }
+                            return Task.CompletedTask;
+                        }
+                    };
                 });
-
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IPictureAccessor, PictureAccessor>();
@@ -152,6 +169,7 @@ namespace Mon_Ami.API
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
     }
