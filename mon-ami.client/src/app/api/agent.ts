@@ -3,6 +3,7 @@ import { history } from "../..";
 import { IActivity } from "../models/activity";
 import { toast } from "react-toastify";
 import { IUser, IUserFormValues } from "../models/user";
+import { IPicture, IProfile } from "../models/profile";
 
 axios.defaults.baseURL = "https://localhost:5001/api";
 
@@ -49,12 +50,18 @@ const responseBody = (response: AxiosResponse) => response.data;
 
 const requests = {
   get: (url: string) => axios.get(url).then(responseBody),
-  post: (url: string, body: {}) =>
-    axios.post(url, body).then(responseBody),
-  put: (url: string, body: {}) =>
-    axios.put(url, body).then(responseBody),
-  delete: (url: string) =>
-    axios.delete(url).then(responseBody),
+  post: (url: string, body: {}) => axios.post(url, body).then(responseBody),
+  put: (url: string, body: {}) => axios.put(url, body).then(responseBody),
+  delete: (url: string) => axios.delete(url).then(responseBody),
+  postForm: (url: string, file: Blob) => {
+    let formData = new FormData();
+    formData.append("File", file);
+    return axios
+      .post(url, formData, {
+        headers: { "Content-type": "multipart/form-data" },
+      })
+      .then(responseBody);
+  },
 };
 
 const User = {
@@ -73,11 +80,21 @@ const Activities = {
     requests.put(`./activities/${activity.id}`, activity),
   delete: (id: string) => requests.delete(`./activities/${id}`),
   attend: (id: string) => requests.post(`/activities/${id}/attend`, {}),
-  leave: (id: string) => requests.delete(`/activities/${id}/attend`)
+  leave: (id: string) => requests.delete(`/activities/${id}/attend`),
+};
+
+const Profiles = {
+  get: (username: string): Promise<IProfile> =>
+    requests.get(`/profiles/${username}`),
+  uploadPicture: (picture: Blob): Promise<IPicture> =>
+    requests.postForm(`/pictures`, picture),
+  setMainPicture: (id: string) => requests.post(`/pictures/${id}/setMain`, {}),
+  deletePicture: (id: string) => requests.delete(`/pictures/${id}`),
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
   Activities,
   User,
+  Profiles,
 };

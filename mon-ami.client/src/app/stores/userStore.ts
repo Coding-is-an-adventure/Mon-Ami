@@ -3,7 +3,7 @@ import {
   action,
   computed,
   makeObservable,
-  runInAction,
+  runInAction
 } from "mobx";
 import { RootStore } from "./rootStore";
 import agent from "../api/agent";
