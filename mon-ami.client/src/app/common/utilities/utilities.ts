@@ -1,5 +1,6 @@
 import { IActivity, IAttendee } from "../../models/activity";
 import { IUser } from "../../models/user";
+import { toJS } from "mobx"
 
 export const combineDateAndTime = (date: Date, time: Date) => {
   const timeString = time.getHours() + ":" + time.getMinutes() + ":00";
@@ -21,6 +22,7 @@ export const setActivityProps = (activity: IActivity, user: IUser) => {
 }
 
 export const createAttendee = (user: IUser): IAttendee => {
+  console.log(toJS(user.image!))
   return {
     displayName: user.displayName,
     isHost: false,
