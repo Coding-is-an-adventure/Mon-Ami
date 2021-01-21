@@ -37,7 +37,6 @@ namespace API.Application.Comments
             public async Task<CommentDTO> Handle(Command request, CancellationToken token)
             {
                 Activity activity = await _context.Activities.FindAsync(new object[] { request.ActivityId }, token);
-                bool succes = await _context.SaveChangesAsync(token) > 0;
 
                 if (activity == null)
                 {
@@ -55,6 +54,8 @@ namespace API.Application.Comments
                 };
 
                 activity.Comments.Add(comment);
+
+                bool succes = await _context.SaveChangesAsync(token) > 0;
 
                 if (succes == true)
                 {
