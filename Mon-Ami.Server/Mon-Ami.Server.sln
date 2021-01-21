@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30717.126
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mon-Ami.API", "Mon-Ami.API\Mon-Ami.API.csproj", "{0130536C-4FCA-4179-BE27-46A9D4743567}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mon-Ami.SignalR", "Mon-Ami.SignalR\Mon-Ami.SignalR.csproj", "{B9906E57-0B64-43F5-9204-84685E0DB4C0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mon-Ami.Test", "Mon-Ami.Test\Mon-Ami.Test.csproj", "{A867DF2A-BB14-49CB-B90C-00E16F50137E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Persistence", "API.Persistence\API.Persistence.csproj", "{D620F8C0-9548-4849-807F-D5BBCB116868}"
@@ -15,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Application", "API.Appl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API.Domain", "API.Domain\API.Domain.csproj", "{E802D773-279D-44F0-AAD1-DC8894A9A764}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{C5377C2B-866A-4A60-BAA3-1169612E4DE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{C5377C2B-866A-4A60-BAA3-1169612E4DE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,10 +25,6 @@ Global
 		{0130536C-4FCA-4179-BE27-46A9D4743567}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0130536C-4FCA-4179-BE27-46A9D4743567}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0130536C-4FCA-4179-BE27-46A9D4743567}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B9906E57-0B64-43F5-9204-84685E0DB4C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B9906E57-0B64-43F5-9204-84685E0DB4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B9906E57-0B64-43F5-9204-84685E0DB4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B9906E57-0B64-43F5-9204-84685E0DB4C0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A867DF2A-BB14-49CB-B90C-00E16F50137E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A867DF2A-BB14-49CB-B90C-00E16F50137E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A867DF2A-BB14-49CB-B90C-00E16F50137E}.Release|Any CPU.ActiveCfg = Release|Any CPU
