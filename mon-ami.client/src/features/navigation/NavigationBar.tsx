@@ -4,10 +4,9 @@ import { observer } from "mobx-react-lite";
 import { NavLink, Link } from "react-router-dom";
 import { RootStoreContext } from "../../app/stores/rootStore";
 
-const NavBar: React.FC = () => {
+const NavigationBar: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
   const { user, logout } = rootStore.userStore;
-
   return (
     <Menu fixed="top" inverted>
       <Container>
@@ -35,7 +34,7 @@ const NavBar: React.FC = () => {
               <Dropdown.Menu>
                 <Dropdown.Item
                   as={Link}
-                  to={`/profile/username`}
+                  to={`/profile/${user.userName}`}
                   text="My profile"
                   icon="user"
                 />
@@ -49,4 +48,4 @@ const NavBar: React.FC = () => {
   );
 };
 
-export default observer(NavBar);
+export default observer(NavigationBar);
