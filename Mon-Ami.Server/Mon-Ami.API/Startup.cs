@@ -49,7 +49,11 @@ namespace Mon_Ami.API
             {
                 options.AddPolicy("CorsPolicy", policy =>
                 {
-                    policy.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000");
+                    policy.AllowAnyHeader()
+                          .AllowAnyMethod()
+                          .WithExposedHeaders("WWW-Authenticate")
+                          .WithOrigins("http://localhost:3000", "http://localhost:3000")
+                          .AllowCredentials();
                 });
             });
 
@@ -92,7 +96,9 @@ namespace Mon_Ami.API
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = key,
                         ValidateAudience = false,
-                        ValidateIssuer = false
+                        ValidateIssuer = false,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
                     };
                     options.Events = new JwtBearerEvents
                     {
@@ -156,6 +162,11 @@ namespace Mon_Ami.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Mon_Ami.API v1"));
             }
+
+            app.UseXContentTypeOptions();
+            app.UseReferrerPolicy(option => option.NoReferrer());
+            app.UseXXssProtection(option => option.EnabledWithBlockMode());
+            app.UseXfo(option => option.Deny());
 
             app.UseHttpsRedirection();
 
