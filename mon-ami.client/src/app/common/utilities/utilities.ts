@@ -1,32 +1,37 @@
 import { IActivity, IAttendee } from "../../models/activity";
 import { IUser } from "../../models/user";
-import { toJS } from "mobx"
 
 export const combineDateAndTime = (date: Date, time: Date) => {
-  const timeString = time.getHours() + ":" + time.getMinutes() + ":00";
+  // const timeString = time.getHours() + ":" + time.getMinutes() + ":00";
 
-  const year = date.getFullYear();
-  // starts at 0.
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const datestring = `${year}-${month}-${day}`;
-  return new Date(datestring + " " + timeString);
+  // const year = date.getFullYear();
+  // const month = date.getMonth() + 1;
+  // const day = date.getDate();
+  // const datestring = `${year}-${month}-${day}`;
+
+  const dateString = date.toISOString().split("T")[0];
+  const timeString = time.toISOString().split("T")[1];
+
+  return new Date(dateString + "T" + timeString);
 };
 
 export const setActivityProps = (activity: IActivity, user: IUser) => {
   activity.date = new Date(activity.date);
-  activity.isGoing = activity.attendees.some(a => a.username === user.userName);
-  activity.isHost = activity.attendees.some(a => a.username === user.userName && a.isHost);
+  activity.isGoing = activity.attendees.some(
+    (a) => a.username === user.userName
+  );
+  activity.isHost = activity.attendees.some(
+    (a) => a.username === user.userName && a.isHost
+  );
 
   return activity;
-}
+};
 
 export const createAttendee = (user: IUser): IAttendee => {
-  console.log(toJS(user.image!))
   return {
     displayName: user.displayName,
     isHost: false,
     username: user.userName,
-    image: user.image!
-  }
-}
+    image: user.image!,
+  };
+};

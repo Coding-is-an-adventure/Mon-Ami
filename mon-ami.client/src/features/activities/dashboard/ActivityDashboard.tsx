@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Grid } from "semantic-ui-react";
 import ActivityList from "../dashboard/ActivityList";
 import { RootStoreContext } from "../../../app/stores/rootStore";
-import Loading from "../../../app/layout/Loading";
+import ActivityListItemPlaceholder from "./ActivityListItemPlaceholder";
 
 const ActivityDashboard: React.FC = () => {
   const rootStore = useContext(RootStoreContext);
@@ -13,17 +13,10 @@ const ActivityDashboard: React.FC = () => {
     loadActivities();
   }, [loadActivities]);
 
-  if (initialLoading) {
-    return <Loading content="Loading activities" />;
-  }
-
   return (
     <Grid>
-      <Grid.Column width={10}>
-        <ActivityList />
-      </Grid.Column>
-      <Grid.Column width={6}>
-        <h2>Activity Filters</h2>
+      <Grid.Column width={16}>
+        {initialLoading ? <ActivityListItemPlaceholder /> : <ActivityList />}
       </Grid.Column>
     </Grid>
   );

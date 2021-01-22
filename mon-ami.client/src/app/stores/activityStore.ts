@@ -15,6 +15,11 @@ import {
   createAttendee,
   setActivityProps,
 } from "../common/utilities/utilities";
+import {
+  HubConnection,
+  HubConnectionBuilder,
+  LogLevel,
+} from "@microsoft/signalr";
 
 export default class ActivityStore {
   rootStore: RootStore;
@@ -31,11 +36,72 @@ export default class ActivityStore {
   target: string = "";
   @observable
   loading: boolean = false;
+  @observable.ref
+  hubConnection: HubConnection | null = null;
 
   constructor(rootStore: RootStore) {
     this.rootStore = rootStore;
     makeObservable(this);
   }
+
+  @action
+  createHubConnection = (activityId: string) => {
+    this.hubConnection = new HubConnectionBuilder()
+      .withUrl("https://localhost:5001/chat", {
+        accessTokenFactory: () => this.rootStore.commonStore.token!,
+      })
+      .configureLogging(LogLevel.Information)
+      .build();
+
+    this.hubConnection
+      .start()
+      .then(() => console.log(this.hubConnection!.state))
+      .then(() => {
+        console.log("Attempting to join a group");
+        this.hubConnection!.invoke("AddToGroup", activityId);
+      })
+      .catch((error) =>
+        console.log(
+          "An error occurred while establishing the websocket connection",
+          error
+        )
+      );
+
+    this.hubConnection.on("ReceiveComment", (comment) => {
+      runInAction(() => {
+        this.activity!.comments.push(comment);
+      });
+    });
+
+    this.hubConnection.on("Send", (message) => {
+      console.log(message);
+    });
+  };
+
+  @action addComment = async (values: any) => {
+    values.activityId = this.activity!.id;
+    //console.log(values);
+    try {
+      if (values.body === null) {
+        toast.error("An empty comment is not allowed");
+      } else {
+        await this.hubConnection!.invoke("SendComment", values);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  @action
+  closeHubConnection = () => {
+    this.hubConnection!.invoke("RemoveFromGroup", this.activity!.id).then(
+      () => {
+        this.hubConnection!.stop()
+          .then(() => console.log("The websocket connection has stopped"))
+          .catch((error) => console.log(error));
+      }
+    );
+  };
 
   @computed
   get activitiesByDate() {
@@ -126,6 +192,7 @@ export default class ActivityStore {
       let attendees = [];
       attendees.push(attendee);
       activity.attendees = attendees;
+      activity.comments = [];
       activity.isHost = true;
       runInAction(() => {
         this.activityRegistry.set(activity.id, activity);
