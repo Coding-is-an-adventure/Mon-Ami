@@ -5,8 +5,7 @@ import { toast } from "react-toastify";
 import { IUser, IUserFormValues } from "../models/user";
 import { IPicture, IProfile } from "../models/profile";
 
-axios.defaults.baseURL = "https://localhost:5001/api";
-
+axios.defaults.baseURL = "https://localhost:5001/api"
 axios.interceptors.request.use(
   (config) => {
     const token = window.localStorage.getItem("jwt");
@@ -22,9 +21,18 @@ axios.interceptors.response.use(undefined, (error) => {
   if (error.message === "Network Error" && !error.response) {
     toast.error("Network error - make sure API is running!");
   }
-  const { status, data, config } = error.response;
+  const { status, data, config, headers } = error.response;
   if (status === 404) {
     history.push("/notfound");
+  }
+  const header = headers["www-authenticate"];
+  if (
+    status === 401 &&
+    header.includes('Bearer error="invalid_token"') === true
+  ) {
+    window.localStorage.removeItem("jwt");
+    history.push("/");
+    toast.info("You session has expired, please login again");
   }
   if (
     status === 400 &&
@@ -90,7 +98,8 @@ const Profiles = {
     requests.postForm(`/pictures`, picture),
   setMainPicture: (id: string) => requests.post(`/pictures/${id}/setMain`, {}),
   deletePicture: (id: string) => requests.delete(`/pictures/${id}`),
-  updateProfile: (profile: Partial<IProfile>) => requests.put(`/profiles`, profile)
+  updateProfile: (profile: Partial<IProfile>) =>
+    requests.put(`/profiles`, profile),
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
